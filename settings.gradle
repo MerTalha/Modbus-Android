@@ -2,7 +2,9 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://storage.googleapis.com/simplify-communications/maven/" }
         gradlePluginPortal()
+
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +12,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven{url "https://jitpack.io"}
     }
 }
 rootProject.name = "Modbus-Android"
