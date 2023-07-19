@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
 
 
+
         button.setOnClickListener(view -> {
             /*GasLevelTask gasLevelTask = new GasLevelTask();
             gasLevelTask.execute();*/
@@ -39,17 +41,21 @@ public class MainActivity extends AppCompatActivity {
                             .setPort(502)
                             .setEncapsulated(false)
                             .setKeepAlive(true)
-                            .setTimeout(2000)
+                            .setTimeout(10000)
                             .setRetries(0))
                     .init(new OnRequestBack<String>() {
                         @Override
                         public void onSuccess(String s) {
                             Log.d(TAG, "onSuccess " + s);
+                            TextView textView = findViewById(R.id.textView3);
+                            textView.setText(s +"success");
                             Toast.makeText(MainActivity.this, "OnSuccess", Toast.LENGTH_SHORT).show();
                         }
                         @Override
                         public void onFailed(String s) {
                             Log.d(TAG, "onFailed " + s);
+                            TextView textView = findViewById(R.id.textView3);
+                            textView.setText(s +"failed");
                             Toast.makeText(MainActivity.this, "onFailed", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -57,12 +63,16 @@ public class MainActivity extends AppCompatActivity {
             ModbusReq.getInstance().readCoil(new OnRequestBack<boolean[]>() {
                 @Override
                 public void onSuccess(boolean[] booleen) {
+                    TextView textView = findViewById(R.id.textView4);
+                    textView.setText(booleen +"success");
                     Log.d(TAG, "readCoil onSuccess " + Arrays.toString(booleen));
                     Toast.makeText(MainActivity.this, "readCoil onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailed(String msg) {
+                    TextView textView = findViewById(R.id.textView4);
+                    textView.setText(msg +"failed");
                     Log.e(TAG, "readCoil onFailed " + msg);
                     Toast.makeText(MainActivity.this, "readCoil onFailed", Toast.LENGTH_SHORT).show();
                 }
@@ -73,12 +83,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(boolean[] booleen) {
                     Log.d(TAG, "readDiscreteInput onSuccess " + Arrays.toString(booleen));
+                    TextView textView = findViewById(R.id.textView);
+                    textView.setText(booleen + "success");
                     Toast.makeText(MainActivity.this, "readDiscreteInput onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailed(String msg) {
                     Log.e(TAG, "readDiscreteInput onFailed " + msg);
+                    TextView textView = findViewById(R.id.textView);
+                    textView.setText(msg +"failed");
                     Toast.makeText(MainActivity.this, "readDiscreteInput onFailed", Toast.LENGTH_SHORT).show();
                 }
             },1,1,5);
@@ -86,16 +100,22 @@ public class MainActivity extends AppCompatActivity {
             ModbusReq.getInstance().readHoldingRegisters(new OnRequestBack<short[]>() {
                 @Override
                 public void onSuccess(short[] data) {
+                    TextView textView = findViewById(R.id.textView5);
+                    textView.setText(data.toString() +"success");
                     Log.d(TAG, "readHoldingRegisters onSuccess " + Arrays.toString(data));
                     Toast.makeText(MainActivity.this, "readHoldingRegisters onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailed(String msg) {
+                    TextView textView = findViewById(R.id.textView5);
+                    textView.setText(msg +"failed");
                     Log.e(TAG, "readHoldingRegisters onFailed " + msg);
                     Toast.makeText(MainActivity.this, "readHoldingRegisters onFailed", Toast.LENGTH_SHORT).show();
                 }
             }, 1, 2, 8);
+
+
 
         });
     }
