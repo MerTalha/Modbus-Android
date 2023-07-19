@@ -3,7 +3,6 @@ package com.example.modbus_android;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import com.zgkxzx.modbus4And.requset.ModbusParam;
 import com.zgkxzx.modbus4And.requset.ModbusReq;
 import com.zgkxzx.modbus4And.requset.OnRequestBack;
 
-import java.net.InetAddress;
 import java.util.Arrays;
 
 
@@ -41,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
                             .setPort(502)
                             .setEncapsulated(false)
                             .setKeepAlive(true)
-                            .setTimeout(10000)
+                            .setTimeout(5000)
                             .setRetries(0))
                     .init(new OnRequestBack<String>() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(String s) {
                             Log.d(TAG, "onSuccess " + s);
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                             textView.setText(s +"success");
                             Toast.makeText(MainActivity.this, "OnSuccess", Toast.LENGTH_SHORT).show();
                         }
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onFailed(String s) {
                             Log.d(TAG, "onFailed " + s);
@@ -61,14 +61,16 @@ public class MainActivity extends AppCompatActivity {
                     });
 
             ModbusReq.getInstance().readCoil(new OnRequestBack<boolean[]>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onSuccess(boolean[] booleen) {
                     TextView textView = findViewById(R.id.textView4);
-                    textView.setText(booleen +"success");
+                    textView.setText(Arrays.toString(booleen) +"success");
                     Log.d(TAG, "readCoil onSuccess " + Arrays.toString(booleen));
                     Toast.makeText(MainActivity.this, "readCoil onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onFailed(String msg) {
                     TextView textView = findViewById(R.id.textView4);
@@ -80,14 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
 
             ModbusReq.getInstance().readDiscreteInput(new OnRequestBack<boolean[]>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onSuccess(boolean[] booleen) {
                     Log.d(TAG, "readDiscreteInput onSuccess " + Arrays.toString(booleen));
                     TextView textView = findViewById(R.id.textView);
-                    textView.setText(booleen + "success");
+                    textView.setText(Arrays.toString(booleen) + "success");
                     Toast.makeText(MainActivity.this, "readDiscreteInput onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onFailed(String msg) {
                     Log.e(TAG, "readDiscreteInput onFailed " + msg);
@@ -98,14 +102,16 @@ public class MainActivity extends AppCompatActivity {
             },1,1,5);
 
             ModbusReq.getInstance().readHoldingRegisters(new OnRequestBack<short[]>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onSuccess(short[] data) {
                     TextView textView = findViewById(R.id.textView5);
-                    textView.setText(data.toString() +"success");
+                    textView.setText(Arrays.toString(data) +"success");
                     Log.d(TAG, "readHoldingRegisters onSuccess " + Arrays.toString(data));
                     Toast.makeText(MainActivity.this, "readHoldingRegisters onSuccess", Toast.LENGTH_SHORT).show();
                 }
 
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onFailed(String msg) {
                     TextView textView = findViewById(R.id.textView5);
