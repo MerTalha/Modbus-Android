@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(String s) {
+                            readDataFromKBRNDevice();
                             Log.d(TAG, "onSuccess " + s);
                             TextView textView = findViewById(R.id.textView3);
                             textView.setText(s +"success");
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onFailed(String s) {
+                            readDataFromKBRNDevice();
                             Log.d(TAG, "onFailed " + s);
                             TextView textView = findViewById(R.id.textView3);
                             textView.setText(s +"failed");
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-            ModbusReq.getInstance().readCoil(new OnRequestBack<boolean[]>() {
+            /*ModbusReq.getInstance().readCoil(new OnRequestBack<boolean[]>() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onSuccess(boolean[] booleen) {
@@ -119,12 +121,34 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "readHoldingRegisters onFailed " + msg);
                     Toast.makeText(MainActivity.this, "readHoldingRegisters onFailed", Toast.LENGTH_SHORT).show();
                 }
-            }, 1, 2, 8);
+            }, 1, 2, 8);*/
 
 
 
         });
     }
+
+    private void readDataFromKBRNDevice() {
+        // Modbus cihazından gelen verileri burada okuyabilir ve kaydedebilirsiniz.
+        // Örneğin:
+        ModbusReq.getInstance().readHoldingRegisters(new OnRequestBack<short[]>() {
+            @Override
+            public void onSuccess(short[] data) {
+                // Gelen verileri kaydedin veya işleyin.
+                Log.d(TAG, "Read data from KBRN device: " + Arrays.toString(data));
+                TextView textView = findViewById(R.id.textView);
+                textView.setText(Arrays.toString(data));
+            }
+
+            @Override
+            public void onFailed(String msg) {
+                Log.e(TAG, "Failed to read data from KBRN device: " + msg);
+                TextView textView = findViewById(R.id.textView);
+                textView.setText(msg);
+            }
+        }, 1, 2, 100);
+    }
+
 
     /*@SuppressLint("StaticFieldLeak")
     public class GasLevelTask extends AsyncTask<Void, Void, Integer> {
