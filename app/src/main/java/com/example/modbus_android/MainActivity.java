@@ -45,20 +45,16 @@ public class MainActivity extends AppCompatActivity {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(String s) {
-                            readDataFromKBRNDevice();
-                            Log.d(TAG, "onSuccess " + s);
                             TextView textView = findViewById(R.id.textView3);
                             textView.setText(s +"success");
-                            Toast.makeText(MainActivity.this, "OnSuccess", Toast.LENGTH_SHORT).show();
+                            readDataFromKBRNDevice();
                         }
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onFailed(String s) {
-                            readDataFromKBRNDevice();
-                            Log.d(TAG, "onFailed " + s);
                             TextView textView = findViewById(R.id.textView3);
                             textView.setText(s +"failed");
-                            Toast.makeText(MainActivity.this, "onFailed", Toast.LENGTH_SHORT).show();
+                            readDataFromKBRNDevice();
                         }
                     });
 
@@ -146,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = findViewById(R.id.textView);
                 textView.setText(msg);
             }
-        }, 1, 2, 100);
+        }, 1, 100, 25);
     }
 
 
