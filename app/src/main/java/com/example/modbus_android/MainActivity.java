@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
                     0x00, 0x01  // Only 1 register (2 bytes)
             };
 
+
+
             byte[] rData = new byte[12];
-            try (Socket socket = new Socket("192.168.1.5", 502)) {
+            try (Socket socket = new Socket("192.168.3.5", 502)) {
                 if (socket.isConnected()) {
                     OutputStream outputStream = socket.getOutputStream();
                     outputStream.write(data);
