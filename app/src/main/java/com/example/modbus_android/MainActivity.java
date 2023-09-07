@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button button;
     TextView textView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,26 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private class ReceiveDataTask extends AsyncTask<Byte, Void, Integer> {
-
-
         @Override
         protected Integer doInBackground(Byte... bytes) {
             byte address = bytes[0];
             int value = 0;
-
-            //short address = 0x301; // 301 adresini temsil ediyor
-
-            /*byte[] data = {
-                    0x00, 0x01,             // Transaction Identifier
-                    0x00, 0x00,             // Protocol Identifier (Modbus)
-                    0x00, 0x06,             // PDU length
-                    0x00, 0x11,             // Unit Identifier (17 decimal, 0x11 hex)
-                    0x03,                   // Read register command
-                    (byte) ((address >> 8) & 0xFF),  // High byte of address
-                    (byte) (address & 0xFF),         // Low byte of address
-                    0x00, 0x01              // Quantity of Registers (2 bytes)
-            };*/
-
 
             byte[] data = {
                     0x00, 0x01, // transaction identifier
@@ -89,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 System.out.println("Error: " + e.getMessage());
             }
-
             return value;
         }
-
         @Override
         protected void onPostExecute(Integer result) {
             textView.setText(String.valueOf(result));
